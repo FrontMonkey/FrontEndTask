@@ -1,0 +1,73 @@
+/* 公共样式区域 */
+
+/*清除浮动*/
+    .f-cb::after
+    {
+        display: block;
+        visibility: hidden;
+        clear: both;
+        overflow: hidden;
+
+        height: 0;
+
+        content: '.';
+    }
+    /* 不兼容ie6/7 */
+/* end 清除浮动 */
+
+/*浮动*/
+    .f-fl
+    {
+        float: left;
+    }
+    .f-fr
+    {
+        float: right;
+    }
+/* end 浮动 */
+
+/*隐藏元素*/
+    .f-dn
+    {
+        display: none;
+    }
+/* 隐藏元素 */
+
+/*鼠标形状*/
+    .f-csp
+    {
+        cursor: pointer;
+    }
+/* end 鼠标形状 */
+
+/*隐藏文字*/
+    .f-ti
+    {
+        overflow: hidden;
+
+        text-indent: -30000px;
+    }
+/* end 隐藏文字 */
+
+/* 单行文字超出显示省略号 */
+    .f-toe
+    {
+        overflow: hidden;
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+/* end 单行文字超出显示省略号 */
+
+/* 屏幕最小宽度 */
+    html {
+        min-width: 1280px;
+    }
+    html,body {
+        width: 100%;
+    }
+/* end 屏幕最小宽度 */
+
+/* 兼容 ie8 */
+/* end 兼容 ie8 */
+
