@@ -1,0 +1,151 @@
+/* 
+* @Author: anchen
+* @Date:   2016-03-25 19:56:54
+* @Last Modified by:   anchen
+* @Last Modified time: 2016-03-28 18:17:09
+*/
+/* css初始化开始*/ 
+html {
+    line-height:1.5;
+    color:#000;
+}
+body {
+    font:12px/1.5 Microsoft YaHei ,sans-serif; background:#dedede;
+}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td {
+    margin:0;
+    padding:0;
+}
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+input,textarea,select{ outline:none;}
+fieldset,img {
+    border:0;
+}
+address,caption,cite,code,dfn,th,var {
+    font-style:normal;
+    font-weight:400;
+}
+em {
+    font-style:normal;
+}
+strong {
+    font-weight:400;
+}
+ol,ul {
+    list-style:none;
+}
+caption,th {
+    text-align:left;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-size:100%;
+    font-weight:400;
+}
+input,textarea,select {
+    font-family:inherit;
+    font-size:inherit;
+    font-weight:inherit;
+}
+input,textarea,select {
+    *font-size:100%;
+}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+    display:block;
+}
+/* css初始化结束*/ 
+/* 导航栏 */
+header{ padding: 10px 28px 10px 30px; background: #333; overflow:hidden;}
+header h1{display:inline-block; width: 117px; height: 38px; background:url(../img/logo_top_ca79a146.png) no-repeat 50%;}
+header h1 a{ display: block; width: 117px; height: 38px; text-indent: -9999em;}
+header nav{ display:inline-block; float:right; line-height: 58px; }
+header nav li{ float:left; margin-left: 28px; _display:inline-block; position: relative; }
+header nav li:before{ content:''; width: 6px; height: 6px; background:#030303; border-radius: 50%; position: absolute;left:-16px; top:26px;}
+nav a{ color:#f2f6ff; font-weight: 600; text-decoration: none;}
+nav a.on,nav a:hover{ color:#89888e;}
+.box{ width: 92%; min-width:640px; padding: 28px; box-shadow: 2px 2px 4px #a1a1a1; background:#fff; margin:20px auto; font-size: 14px; line-height: 26px;}
+.box h2{ font-size: 22px; line-height: 46px;}
+.box h3{ font-size: 16px; color:#5c6165; line-height: 34px;}
+.box .article_info{ color:#5f6064; font-size: 11px;}
+/* picture css */
+.pic1{ width: 300px; height: 242px;}
+.pic_box{ width: 100px; height: 104px; border:1px solid #cecece; padding: 10px; margin:15px 0 0 40px;}
+.pic_box img{ width: 100px; height: 80px;}
+
+
+.list2,.list3{ padding-left:2em;}
+.list3{ list-style:decimal;}
+/* table css start */
+.biaoge{ width: 100%; border:1px solid #cacaca; }
+.biaoge .col1{ width: 492px; height: 23px; }
+.biaoge .col2{ width: 207px; height: 23px; }
+.biaoge th{ background:#333; color:#fff; font-weight: 600;}
+.biaoge td,.biaoge th{ padding-left: 5px;}
+/* th{ color:#fff;} */
+.rowBottom{ font-weight: 600; background:#ccc;}
+/* celan css start */
+.box .celan{ height: 38px; border-left:3px solid #cacaca; padding-left: 12px; color:#000; font-weight: 600;}
+.biaodan{ width: 100%; padding-top:22px; border:none; }
+.biaodan p{ margin-left: 384px; line-height: 40px; color:#a2a2a0; padding-bottom: 10px;}
+.biaodan input{ margin-left:14px;}
+.biaodan input[type=radio]{
+background:red;
+} 
+.suojin1{ margin-left: 272px;}
+.suojin2{ margin-left: 300px;}
+.suojin3{ margin-left: 332px;}
+.suojin4{ margin-left: 307px; vertical-align: top;}
+.biaodan button{width: 100%; height: 38px; border-radius: 8px ; border:1px solid #3355d0;  background:#3355d0; cursor:pointer; color:#fff; font-size: 16px; font-weight: 600; box-shadow:none;}
+
+.biaodan input[type=radio] {
+    background:none;
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+.biaodan input[type=radio]::before,
+.biaodan input[type=radio]::after {
+  position: absolute;
+  display: block;
+  content: '';
+  border-radius: 50%;
+  /* transition: .3s all esae; */
+  top: -1px;
+  left: -1px;
+}
+.biaodan input[type=radio]::before {
+ 
+  width: 16px;
+  height: 16px;
+  border: 1px solid #ccc;
+}
+.biaodan input[type=radio]::after {
+  top: 1px;
+  left: 1px;
+  width: 13px;
+  height: 13px;
+  background-color: #fff;
+}
+.biaodan input[type=radio]:checked::before {
+     background:none;
+    width: 16px;
+  height: 16px;
+  background: #379efa;
+}
+.biaodan input[type=radio]:checked::after {
+  top: 5px;
+  left: 5px;
+  width: 5px;
+  height: 5px;
+  background-color: #fff;
+}
+.radio_suojin{ margin-left: 10px;}
+
+
+
+
+
+
+
