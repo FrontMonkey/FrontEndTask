@@ -1,2 +1,16 @@
 .DS_Store
 .git
+
+# olaf_cheng 需要忽略的文件
+# 为了方便没有使用 sass 的同学预览页面， stylesheets 文件夹不忽略
+.sass-cache/
+.git/
+
+
+# 需要忽略的单个文件
+ie.scss
+print.scss
+screen.scss
+ie.css
+print.css
+screen.css
