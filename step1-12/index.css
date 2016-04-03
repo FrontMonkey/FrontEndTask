@@ -1,0 +1,48 @@
+/* 
+* @Author: anchen
+* @Date:   2016-04-03 22:19:44
+* @Last Modified by:   anchen
+* @Last Modified time: 2016-04-03 23:37:49
+*/
+
+/* 简易重置 */
+*{ margin: 0; padding: 0; }
+img{ border:0; }
+ol, ul ,li{ list-style: none; } 
+input{ display:block; margin: 0; padding: 0;}
+textarea{display:block;width: 500px;min-height: 200px;float: left;}
+/* 代码部分 */
+.wraper{ width: 100%; padding: 1%;}
+/* 第一块 */
+.table{ overflow: hidden;margin: 30px auto; display:flex; width: 90%;}
+.table ul:nth-of-type(1){/*  width: 35px; */ float: left; flex:2;}
+.table ul:nth-of-type(2){ /* width: 130px; */ float: left; margin: 0 5px; flex:9;}
+.table ul:nth-of-type(3){/*  width: 50px; */ float: left; flex:3;}
+.table ul li:nth-of-type(odd){ background: #cccccc;}
+.table ul li:nth-of-type(1){ background: #000; color: #fff; font-weight: bold;}
+.table ul li:nth-of-type(2),.table ul li:nth-of-type(3),.table ul li:nth-of-type(4){color:red;}
+/* 第二块 */
+.input-box{ margin: 30px auto; }
+.text{width: 40%; display:block; margin:0 auto;  height: 20px; border: 1px solid #ccc; font-size: 12px; line-height: 20px;display: block; transition: 1s;outline: none;padding-left: 10px;}
+.text:focus{ width:70%; /* border-color:#7BADE7;  */box-shadow: 0 0 1px 2px #7BADE7;}
+/* 第三块 */
+.banner{margin: 30px auto; width: 300px;height: 100px; position: relative; overflow:hidden;}
+.banner .banner-show{width: 300%; height: 100%;position:absolute;left:0;top:0;animation:banner 5s infinite; -moz-animation:banner 5s infinite;-webkit-animation:banner 5s infinite; -o-animation:banner 5s infinite;}
+.banner .banner-show li{ width: 300px; height: 100px;float: left;}
+.banner .banner-show li:nth-of-type(1){ background: red;}
+.banner .banner-show li:nth-of-type(2){ background: yellow;}
+.banner .banner-show li:nth-of-type(3){ background: green;}
+.banner ol{ position:absolute;right:0;bottom:0;}
+.banner ol li{ width: 30px;height: 30px;float: left; margin-left:5px; background: rgba(255,255,255,0.5);font-size: 14px;text-align: center;line-height: 30px;cursor: pointer;}
+/* 自动轮播 */
+ @keyframes banner{
+    15% { transform: translate(0); }
+    30%{ transform: translate(-300px);}
+    45% { transform: translate(-300px);}
+    60% { transform: translate(-600px);}
+    75% { transform: translate(-600px);}
+    90% { transform: translate(0);}
+} 
+.show{ padding-top: 20px;}
+/* 代码部分 */
+.show{overflow:hidden;}
