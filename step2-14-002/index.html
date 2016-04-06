@@ -28,12 +28,15 @@ var aqiData = [
 
 (function () {
 
+<<<<<<< HEAD
     /*
     在注释下方编写代码
     遍历读取aqiData中各个城市的数据
     将空气质量指数大于60的城市显示到aqi-list的列表中
     */
 
+=======
+>>>>>>> origin/master
     /**
      * 二叉树节点
      *
@@ -87,7 +90,11 @@ var aqiData = [
     }
 
     /**
+<<<<<<< HEAD
      * 二叉查找树
+=======
+     * 二叉查找树(BST)
+>>>>>>> origin/master
      *
      * @class
      */
@@ -96,6 +103,10 @@ var aqiData = [
         this.inOrder = inOrder;
         this.insert = insert;
     }
+<<<<<<< HEAD
+=======
+    var CityRanking = new BST();
+>>>>>>> origin/master
 
     /**
      * BST 中序遍历
@@ -109,7 +120,10 @@ var aqiData = [
         }
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     /**
      * 从 aqiData 中过滤出指数大于 60 的数组元素
      *
@@ -128,10 +142,13 @@ var aqiData = [
         }
     }
 
+<<<<<<< HEAD
     function compare(a, b) {
         return a - b;
     }
 
+=======
+>>>>>>> origin/master
     /**
      * 将阿拉伯数字转化为汉字大写
      *
@@ -204,14 +221,20 @@ var aqiData = [
     };
 
     swap(aqiData);
+<<<<<<< HEAD
     var CityRanking = new BST();
 
 
+=======
+>>>>>>> origin/master
     var cityList = aqiData.filter(ifGreaterThan60);
     for (var i = cityList.length - 1; i >= 0; i--) {
         CityRanking.insert(cityList[i]);
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     inOrder(CityRanking.root);
 
     var list = document.getElementById("aqi-list");
@@ -222,7 +245,10 @@ var aqiData = [
        li.appendChild(txt);
        list.appendChild(li);
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 }());
 
 </script>
