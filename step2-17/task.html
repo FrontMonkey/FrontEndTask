@@ -1,0 +1,51 @@
+<!DOCTYPE>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>IFE JavaScript Task 01</title>
+	<style>
+		.aqi-chart-wrap {
+			height: 200px;
+			margin-top: 10px;
+		}
+		.aqi-chart-wrap ul {
+			height: 100%;
+			padding: 0 100px;
+			border: 1px solid #C4C4C4;
+			background-color: #ECECEC;
+		}
+		.aqi-chart-wrap ul li {
+			display: inline-block;
+			height: 200px;
+			display: table-cell;
+			vertical-align: bottom;
+		}
+		.aqi-chart-wrap ul a { display: block; border: 1px solid #A49D9D;}
+		.aqi-chart-wrap ul a.sm { width: 10px; }
+		.aqi-chart-wrap ul a.md { width: 50px; }
+		.aqi-chart-wrap ul a.lg { width: 150px; }
+		.aqi-chart-wrap ul a.grade1 { background-color: #FBE37C; }
+		.aqi-chart-wrap ul a.grade2 { background-color: #FA8B8B; }
+		.aqi-chart-wrap ul a.grade3 { background-color: #82E3CB; }
+		.aqi-chart-wrap ul a.grade4 { background-color: #D497C8; }
+	</style>
+</head>
+<body>
+	<fieldset id="form-gra-time">
+		<legend>请选择日期粒度：</legend>
+		<label>日<input name="gra-time" value="day" type="radio" tabindex="1" checked="checked"></label>
+		<label>周<input name="gra-time" value="week" type="radio" tabindex="2"></label>
+		<label>月<input name="gra-time" value="month" type="radio" tabindex="3"></label>
+	</fieldset>
+
+	<fieldset>
+		<legend>请选择查看的城市：</legend>
+		<select id="city-select"></select>
+	</fieldset>
+
+	<div class="aqi-chart-wrap">
+		<ul></ul>
+	</div>
+	<script src="task.js"></script>
+</body>
+</html>
