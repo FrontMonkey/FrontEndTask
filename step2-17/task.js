@@ -1,7 +1,7 @@
 /*
  * @Author: Mertens
  * @Date:   2016-04-05 22:40:39
- * @Last Modified time: 2016-04-07 13:33:45
+ * @Last Modified time: 2016-04-07 15:29:29
  */
 
 'use strict';
@@ -51,6 +51,13 @@ var aqiSourceData = {
 	"沈阳": randomBuildData(500)
 };
 
+console.dir(aqiSourceData['北京']);
+var i = 0;
+for(var name in aqiSourceData['北京']){
+	i++;
+}
+console.dir(i);
+
 // 用于渲染图表的数据
 var chartData = aqiSourceData['北京'];
 
@@ -93,22 +100,24 @@ function renderChart(graTime, data) {
 		* @param {object} root 包裹数据的那个元素
 		*/
 		var showWeeklyData = function(data, root) {
-			var flag = 0; // 判断是否到一周
+			var totalDays = 0; // 计算一周的天数
 			var total = 0; // 一周七天的 aqi 总和
 			var average = 0; // 一周七天的 aqi 平均数值
 			var referent = 0; // 判断是遍历完所有数据
 			var item = null; // 存放新创建的 li 标签
 			// 遍历数据
 			for (name in data) {
+				var date = new Date(name);
+				var weekDay = date.getDay();
 				total += data[name];
-				flag++;
-				total++;
+				totalDays++;
 				referent++;
-				// 如果累加了七天的数据，或者遍历到了数据的末尾
-				if (flag === 7 || referent === 92) {
-					// 计算平均数值，重置 flag 和 total
-					average = total / flag;
-					flag = 0;
+				// 周六为一个星期的结束
+				// 如果累加了周六的数据，或者遍历到了数据的末尾
+				if (weekDay === 6 || referent === 91) {
+					// 计算平均数值，重置 totalDays 和 total
+					average = total / totalDays;
+					totalDays = 0;
 					total = 0;
 					// 创建一个 li 标签，添加到 ul 里面
 					item = list.appendChild(createItem('md', average, graTime, name));
