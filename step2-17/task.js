@@ -1,7 +1,7 @@
 /*
  * @Author: Mertens
  * @Date:   2016-04-05 22:40:39
- * @Last Modified time: 2016-04-07 15:29:29
+ * @Last Modified time: 2016-04-07 15:39:31
  */
 
 'use strict';
@@ -138,18 +138,18 @@ function renderChart(graTime, data) {
 			var prev = 1; // 前一个数据的月份
 			var current = 1; // 当前数据的月份
 			var total = 0; // 一个月的 aqi 数值总和
-			var flag = 0; // 这个月的总天数
+			var totalDays = 0; // 这个月的总天数
 			var average = 0; // 一个月的 aqi 数值平均数
 			var item = null; // 存放新创建的 li 标签
 			// 遍历数据
 			for (var name in data) {
 				current = parseInt(name.slice(5, 7)); // 获取当前数据的月份
 				referent++;
-				flag ++;
+				totalDays ++;
 				// 如果当前数据的月份大于前一个数据的月份 或者 数据已经遍历完
 				if (prev < current || referent === 92) {
-					average = total / flag;
-					flag = 0;
+					average = total / totalDays;
+					totalDays = 0;
 					total = 0;
 					list.appendChild(createItem('lg', average, graTime, name));
 				}
