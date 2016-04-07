@@ -1,7 +1,7 @@
 /*
  * @Author: Mertens
  * @Date:   2016-04-05 22:40:39
- * @Last Modified time: 2016-04-07 15:39:31
+ * @Last Modified time: 2016-04-07 15:48:04
  */
 
 'use strict';
@@ -134,7 +134,7 @@ function renderChart(graTime, data) {
 		* @param {object} root 包裹数据的那个元素
 		*/
 		var showMonthlyData = function(data, root) {
-			var referent = 1; // 判断是遍历完所有数据
+			var referent = 0; // 判断是遍历完所有数据
 			var prev = 1; // 前一个数据的月份
 			var current = 1; // 当前数据的月份
 			var total = 0; // 一个月的 aqi 数值总和
@@ -147,7 +147,7 @@ function renderChart(graTime, data) {
 				referent++;
 				totalDays ++;
 				// 如果当前数据的月份大于前一个数据的月份 或者 数据已经遍历完
-				if (prev < current || referent === 92) {
+				if (prev < current || referent === 91) {
 					average = total / totalDays;
 					totalDays = 0;
 					total = 0;
