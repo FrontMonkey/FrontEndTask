@@ -1,8 +1,7 @@
 /*
- * @Author: Administrator
+ * @Author: Mertens
  * @Date:   2016-04-05 22:40:39
- * @Last Modified by:   Administrator
- * @Last Modified time: 2016-04-06 22:20:27
+ * @Last Modified time: 2016-04-07 13:33:45
  */
 
 'use strict';
@@ -70,55 +69,96 @@ function renderChart(graTime, data) {
 	chartWrap.innerHTML = '';
 	var show = (function() {
 		var index = 0;
+
+		/**
+		* 根据天数显示数据
+		* 
+		* @param {object} data 具体哪个城市 aqi 的数据
+		* @param {object} root 包裹数据的那个元素
+		*/
 		var showDailyData = function(data, root) {
+			// 遍历数据
 			for (var name in data) {
+				// 把每天的数据都创建一个 li 标签
 				list.appendChild(createItem('sm', data[name], graTime, name));
 			}
+			// 把创建好的数据添加到页面上
 			root.appendChild(list);
 		};
+
+		/**
+		* 根据星期显示数据
+		* 
+		* @param {object} data 具体哪个城市 aqi 的数据
+		* @param {object} root 包裹数据的那个元素
+		*/
 		var showWeeklyData = function(data, root) {
-			var flag = 0;
-			var total = 0;
-			var referent = 1;
-			var average = 0;
-			var item = null;
+			var flag = 0; // 判断是否到一周
+			var total = 0; // 一周七天的 aqi 总和
+			var average = 0; // 一周七天的 aqi 平均数值
+			var referent = 0; // 判断是遍历完所有数据
+			var item = null; // 存放新创建的 li 标签
+			// 遍历数据
 			for (name in data) {
 				total += data[name];
 				flag++;
 				total++;
 				referent++;
-				if (flag === 7 || referent === 93) {
+				// 如果累加了七天的数据，或者遍历到了数据的末尾
+				if (flag === 7 || referent === 92) {
+					// 计算平均数值，重置 flag 和 total
 					average = total / flag;
 					flag = 0;
 					total = 0;
+					// 创建一个 li 标签，添加到 ul 里面
 					item = list.appendChild(createItem('md', average, graTime, name));
 				}
 			}
+			// 把创建好的数据添加到页面上
 			root.appendChild(list);
 		};
+
+		/**
+		* 根据月份显示数据
+		* 
+		* @param {object} data 具体哪个城市 aqi 的数据
+		* @param {object} root 包裹数据的那个元素
+		*/
 		var showMonthlyData = function(data, root) {
-			var flag = 1;
-			var current = 0;
-			var next = 0;
-			var total = 0;
-			var average = 0;
-			var item = null;
+			var referent = 1; // 判断是遍历完所有数据
+			var prev = 1; // 前一个数据的月份
+			var current = 1; // 当前数据的月份
+			var total = 0; // 一个月的 aqi 数值总和
+			var flag = 0; // 这个月的总天数
+			var average = 0; // 一个月的 aqi 数值平均数
+			var item = null; // 存放新创建的 li 标签
+			// 遍历数据
 			for (var name in data) {
-				next = parseInt(name.slice(5, 7));
-				flag++;
-				total += data[name];
-				if (current < next || flag === 92) {
+				current = parseInt(name.slice(5, 7)); // 获取当前数据的月份
+				referent++;
+				flag ++;
+				// 如果当前数据的月份大于前一个数据的月份 或者 数据已经遍历完
+				if (prev < current || referent === 92) {
 					average = total / flag;
 					flag = 0;
 					total = 0;
 					list.appendChild(createItem('lg', average, graTime, name));
 				}
-				current = next;
+				total += data[name];
+				prev = current;
 			}
 			root.appendChild(list);
 		};
 
-		function createItem(className, data, graTime, name) {
+		/**
+		* 创建一个<li>元素，包含一个子元素<a>元素
+		* 
+		* @param {string} className 要给<a>元素设置的类名
+		* @param {number} data      aqi的值
+		* @param {string} graTime   选择填充数据的方式 day week month
+		* @param {string} time      可选参数，当前 aqi 数值的时间
+		*/
+		function createItem(className, data, graTime, time) {
 			var item = null;
 			var link = null;
 			var titleMsg = {
@@ -133,7 +173,7 @@ function renderChart(graTime, data) {
 				titleStr = titleMsg[graTime][index] + ' : ' + parseInt(data);
 				index++;
 			} else {
-				titleStr = name + ' 的空气质量指数 : ' + parseInt(data);
+				titleStr = time + ' 的空气质量指数 : ' + parseInt(data);
 			}
 			item = document.createElement('li');
 			link = document.createElement('a');
@@ -143,6 +183,12 @@ function renderChart(graTime, data) {
 			item.appendChild(link);
 			list.appendChild(item);
 
+			/**
+			* 判断传入的数值返回特定的表示颜色值的字符串
+			* 
+			* @param {number} data 一个 0 - 1 之间的数值
+			* @return {string} 返回表示颜色值的字符串
+			*/
 			function selectColor(data) {
 				var colors = ['#81D7BA', '#F6F599', '#F0CB82', '#EAB394'];
 				if (data < .25 && data >= 0) {
