@@ -2,7 +2,7 @@
  * @Author: Administrator
  * @Date:   2016-04-09 15:49:33
  * @Last Modified by:   Administrator
- * @Last Modified time: 2016-04-10 00:04:58
+ * @Last Modified time: 2016-04-10 00:27:55
  */
 
 'use strict';
@@ -52,6 +52,7 @@ TreeWalker.prototype = (function(){
 				} else {
 					clearInterval(intervalID);
 					_isWalking = false;
+					_prev.style.backgroundColor = '#E3DFDF';
 				}
 			}, 500);
 		}	
