@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style>
+		div {
+			margin: 5px;
+			padding: 10px;
+			border: 3px solid #5E7C62;
+			background-color: #E3DFDF;
+			font-size: 16px;
+			font-family: 'microsoft yahei';
+			color: #000;
+		}
+        #wrap {
+        	display: flex;
+        	border: none;
+        	background-color: #fff;
+        }
+		#root {
+			display: flex;
+			background-color: #E3DFDF;
+		}
+		#root div {
+			flex-grow: 1;
+			display: flex;
+		}
+
+		input {
+			margin-left: 20px;
+		}
+		label {
+			margin-left: 30px;
+		}
+		#root.isWalking,
+		.isWalking {
+			background-color: #F07A7F;
+			color: #F9EBEB;
+		}
+        </style>
+    </head>
+    <body>
+	    <div id="wrap"></div>
+	    <form action="#" name="selectMode">
+	    	<label for="selectMethod">遍历方式：</label>
+	    	<select name="selectMethod" id="selectMethod">
+	    		<option value="traverseDF" selected>深度优先遍历</option>
+	    		<option value="traverseBF">广度优先遍历</option>
+	    	</select>
+	    	<label for="specificData">需要查找的数据：</label>
+	    	<input type="text" id="specificData" name="specificData">
+	    	<input type="button" value="开始查找" name="go">
+	    </form>
+	<script src="task.js"></script>
+    </body>
+</html>

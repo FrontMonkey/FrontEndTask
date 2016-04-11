@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style>
+		fieldset {
+			display: inline-block;
+			margin-bottom: 10px;
+		}
+		dt {
+			padding: 5px;
+			display: inline-block;
+			font-size: 14px;
+			color: #DCE9ED;
+			background-color: #64768A;
+			border: 1px solid #859AAF;
+			cursor: pointer;
+			border-radius: 5px;
+		}
+		dl.is-crt>dt {
+			color: #64768A;
+			background-color: #DCE9ED;
+		}
+        </style>
+    </head>
+    <body>
+    	<form action="#" name="selectMode">
+	    	<legend>添加节点</legend>
+	    	<p>
+		   		<label for="nodeContent">节点的内容</label>
+		    	<input type="text" id="nodeContent" name="nodeContent">
+		    </p>
+		    <p>
+		    	<input type="button" value="添加节点" name="add">
+		    </p>
+	    	<legend>删除节点</legend>
+	    	<p>
+	    		<input type="button" value="删除节点" name="remove">
+	    	</p>
+	    </form>
+	    <div id="wrap"></div>
+	    <script src="task.js"></script>
+    </body>
+</html>
