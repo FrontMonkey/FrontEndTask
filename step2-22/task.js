@@ -2,7 +2,7 @@
  * @Author: Administrator
  * @Date:   2016-04-09 15:49:33
  * @Last Modified by:   Administrator
- * @Last Modified time: 2016-04-10 00:27:55
+ * @Last Modified time: 2016-04-11 16:11:39
  */
 
 'use strict';
@@ -47,7 +47,6 @@ TreeWalker.prototype = (function(){
 				if (i < len) {
 					queue[i]();
 					_isWalking = true;
-					console.log(_isWalking);
 					i++;
 				} else {
 					clearInterval(intervalID);
