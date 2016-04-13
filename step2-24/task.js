@@ -2,7 +2,7 @@
  * @Author: Administrator
  * @Date:   2016-04-11 16:36:42
  * @Last Modified by:   Administrator
- * @Last Modified time: 2016-04-11 19:32:20
+ * @Last Modified time: 2016-04-13 00:42:06
  */
 
 'use strict';
@@ -25,6 +25,9 @@ function Node(data) {
 	this.data = data;
 	this.parent = null;
 	this.children = [];
+	this.clickTimes = 0;
+	this.visibility = true;
+
 	// 每个节点都存放着一个 dl 的引用
 	this.element = (function() {
 		var temp = document.createElement('dl');
@@ -46,17 +49,20 @@ function Tree(data) {
 	node.element.setAttribute('id', 'root'); // 根据 data 设置 element 里面存放的那个 div 的属性
 	this.root = node;
 
-	this.selectedNode = null; // 选中的节点
+	this.seletedNode = null; // 选中的节点
 	this.prevNode = null;
 }
 
 Tree.prototype = (function() {
+
 	/**
 	 * 深度优先遍历所有节点
 	 * 
 	 * @param {function} callback 回调函数
+	 * @param {object} root 遍历开始的根节点
 	 */
-	var traverseDF = function(callback) {
+	var traverseDF = function(callback, root) {
+		root = root || this.root;
 
 		// 一个递归立即执行函数
 		(function recurse(currentNode) {
@@ -74,18 +80,20 @@ Tree.prototype = (function() {
 
 			// step 1
 			// 将根节点传入递归函数
-		})(this.root);
+		})(root);
 	};
 
 	/**
 	 * 广度优先遍历所有节点
 	 * 
 	 * @param {function} callback 回调函数
+	 * @param {object} root 遍历开始的根节点
 	 */
-	var traverseBF = function(callback) {
+	var traverseBF = function(callback, root) {
+		root = root || this.root;
 		var queue = [];
 
-		queue.push(this.root);
+		queue.push(root);
 
 		var currentTree = queue.shift();
 
@@ -120,7 +128,7 @@ Tree.prototype = (function() {
 	 * 将一个数据作为子元素插入到指定的父元素之下
 	 * 
 	 * @param {object}        data 需要储存的数据
-	 * @param {function}    toData 需要插入节点的父节点包含的数据
+	 * @param {object}    parentNode 需要插入节点的父节点
 	 * @param {function} traversal 遍历树的方式
 	 */
 	var add = function(data, parentNode, traversal) {
@@ -142,10 +150,10 @@ Tree.prototype = (function() {
 	 * 从一个父元素之下删除包含指定数据的节点
 	 * 
 	 * @param {object}        node 要删除节点
-	 * @param {object}    toData 要删除节点的父节点
+	 * @param {object}  parentNode 要删除节点的父节点
 	 * @param {function} traversal 遍历树的方式
 	 */
-	var remove = function(node, parent) {
+	var remove = function(node, parentNode) {
 		var tree = this;
 		var childToRemove = null;
 		var elementToReomve = null;
@@ -154,13 +162,13 @@ Tree.prototype = (function() {
 		// 找到要删除节点的父节点
 		// this.contains(fromData, callback, traversal);
 
-		if (parent) {
+		if (parentNode) {
 			// 找到要删除节点在其父元素 children 集合里面的索引
-			index = findIndex(parent.children, node.data);
+			index = findIndex(parentNode.children, node.data);
 			// 删除子节点
-			childToRemove = parent.children.splice(index, 1);
+			childToRemove = parentNode.children.splice(index, 1);
 			// 将存放在该节点的元素从文档树移除
-			elementToReomve = parent.element.removeChild(parent.element.children[index + 1]);
+			elementToReomve = parentNode.element.removeChild(parentNode.element.children[index + 1]);
 		} else {
 			throw new Error('Parent does not exist.');
 		}
@@ -183,19 +191,47 @@ Tree.prototype = (function() {
 				index = i;
 			}
 		}
-
 		return index;
 	}
+
+	/**
+	 * 从根节点开始折叠或者展开
+	 * 
+	 * @param {boolean}       flag 一个布尔值，表示折叠或者展开
+	 * @param {object}        root 折叠或者展开的根节点
+	 * @param {function} traversal 遍历树的方式
+	 */
+	var collapse = function(flag, root, traversal) {
+		// 折叠
+		if (flag) {
+			// 遍历根节点以下的所有节点
+			traversal.call(this, function(node) {
+				node.element.style.display = 'none'; // 设置 css 属性隐藏节点
+				node.visibility = false; // 设置 visibility 属性表示不可见
+			}, root);
+			root.element.style.display = ''; // 设置 css 属性显示根节点
+			root.visibility = true; // 设置 visibility 属性表示根节点可见
+		}
+		// 展开 
+		else {
+			traversal.call(this, function(node) {
+				node.element.style.display = '';
+				node.visibility = true;
+			}, root);
+		}
+	};
 	return {
 		constructor: Tree,
 		traverseDF: traverseDF,
 		traverseBF: traverseBF,
 		contains: contains,
 		add: add,
-		remove: remove
+		remove: remove,
+		collapse: collapse
 	}
 })();
 
+// 创建一棵树的实例
 var tree = new Tree('电子设备');
 tree.add('手机', tree.root, tree.traverseDF);
 tree.add('电脑', tree.root, tree.traverseDF);
@@ -204,34 +240,94 @@ tree.add('平板', tree.root, tree.traverseDF);
 var wrap = document.getElementById('wrap');
 wrap.appendChild(tree.root.element);
 
+// 点击节点，被选中样式或者折叠展开
 wrap.addEventListener('click', function(e) {
-	var target = e.target;
-	var current = null;
+	var target = e.target; // 获取触发事件的目标
+	var current = null; // 用 current 保存当前的 dl 节点
 	if (target.tagName === 'DT') {
-		current = target.parentNode;
-		if(tree.prevNode){
-			tree.prevNode.element.setAttribute('class', '');
-		}
-		tree.selectedNode = current.originNode;
-		tree.prevNode = current.originNode;
-		current.setAttribute('class', 'is-crt');
+		current = target.parentNode; 
+		// 点击元素，切换样式
+		(function() {
+			// 如果上一个被选中元素存在
+			if (tree.prevNode) {
+				// 设置 class 清除特殊样式
+				tree.prevNode.element.setAttribute('class', '');
+			}
+			// 设置当前被选中元素的特殊样式
+			current.setAttribute('class', 'is-crt');
+			// 设置当前选中的树节点为当前 dl 元素的 originNode
+			tree.seletedNode = current.originNode;
+		}());
+		// 点击元素，折叠节点
+		(function() {
+			var flag = false;
+			// 点击一次，点击次数加 1
+			tree.seletedNode.clickTimes++;
+			// 如果上一个被选中元素存在，且当前选中的不是上一个点击的元素
+			if(tree.prevNode && tree.seletedNode !== tree.prevNode){
+				// 将前一个选中元素的点击次数设置为 0
+				tree.prevNode.clickTimes = 0;
+			}
+			// 折叠
+			if (tree.seletedNode.clickTimes === 2) {
+				tree.seletedNode.clickTimes = 0;
+				flag = true;
+			}
+			// 展开
+			else {
+				flag = false;
+			}
+			tree.collapse(flag, tree.seletedNode, tree.traverseBF);
+		}());
+		// 设置上一个选中元素为当前元素
+		tree.prevNode = tree.seletedNode;
 	}
 });
-
-var dataTree = document.getElementById('root');
 
 var selectForm = document.forms['selectMode'];
 
-selectForm['remove'].addEventListener('click', function(){
-	tree.remove(tree.selectedNode, tree.selectedNode.parent);
+selectForm['remove'].addEventListener('click', function() {
+	tree.remove(tree.seletedNode, tree.seletedNode.parent);
 });
 
-selectForm['add'].addEventListener('click', function(){
+selectForm['add'].addEventListener('click', function() {
 	var value;
-	if(selectForm['nodeContent'].value !== ''){
+	if (selectForm['nodeContent'].value !== '') {
 		value = selectForm['nodeContent'].value;
 	}
-	if(value !== undefined){
-		tree.add(value, tree.selectedNode);
+	if (value !== undefined) {
+		tree.add(value, tree.seletedNode);
 	}
+});
+
+// 搜索节点
+selectForm['search'].addEventListener('click', function() {
+	if (selectForm['searchContent'].value !== '') {
+		var data = selectForm['searchContent'].value;
+		// 搜索节点
+		tree.contains(data, function(node) {
+			if (tree.prevNode) {
+				// 去除上一个选中节点的样式
+				tree.prevNode.element.setAttribute('class', '');
+			}
+			// 设置当前选中节点的样式
+			node.element.setAttribute('class', 'is-crt');
+			tree.prevNode = node;
+
+			var callback = function(node) {
+				tree.collapse(false, node, tree.traverseBF);
+			};
+			// 检查当前搜索到的节点的父元素是被折叠，如果是，就展开
+			checkVisibility(node, callback);
+		}, tree.traverseBF);
+	}
+
+	function checkVisibility(node, callback) {
+		var current = node.parent;
+		if (!current.visibility) {
+			checkVisibility(current, callback);
+		} else {
+			callback(current);
+		}
+	};
 });
