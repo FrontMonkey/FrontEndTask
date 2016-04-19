@@ -1,0 +1,201 @@
+/*
+* @Author: Mertens
+* @Date:   2016-04-17 10:50:45
+* @Last Modified time: 2016-04-19 15:46:40
+*/
+html {
+    min-width: 900px;
+}
+body,
+button
+{
+    font-family: 'microsoft yahei';
+}
+
+.clearfix:after
+{
+    display: block;
+    visibility: hidden;
+    clear: both;
+    overflow: hidden;
+
+    height: 0;
+
+    content: '.';
+}
+
+.wrap
+{
+    float: left;
+}
+
+.universe
+{
+    position: relative;
+
+    width: 400px;
+    height: 400px;
+
+    background-color: #6d6961;
+}
+
+.star
+{
+    position: relative;
+    top: 150px;
+    left: 50%;
+
+    width: 100px;
+    height: 100px;
+    margin-left: -50px;
+
+    border-radius: 50%;
+    background-color: #eaa961;
+}
+
+.spaceship
+{
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+
+    position: absolute;
+    top: 120px;
+    left: 50%;
+
+    display: inline-block;
+    overflow: hidden;
+
+    width: 80px;
+    height: 20px;
+    margin-left: -40px;
+
+    text-align: center;
+
+    color: #6d6961;
+    border-radius: 10px;
+    background-color: #e6e2ce;
+}
+.num1
+{
+    -webkit-transform-origin: 40px 80px;
+            transform-origin: 40px 80px;
+}
+.num2
+{
+    top: 90px;
+
+    -webkit-transform-origin: 40px 110px;
+            transform-origin: 40px 110px;
+}
+.num3
+{
+    top: 60px;
+
+    -webkit-transform-origin: 40px 140px;
+            transform-origin: 40px 140px;
+}
+.num4
+{
+    top: 30px;
+
+    -webkit-transform-origin: 40px 170px;
+            transform-origin: 40px 170px;
+}
+
+.spaceship .energy
+{
+    display: block;
+
+    height: 20px;
+
+    background-color: #d47e7e;
+}
+
+.spaceship .number
+{
+    position: absolute;
+    top: 0;
+    left: 12px;
+}
+
+.control
+{
+    width: 354px;
+    height: 374px;
+    padding: 10px;
+
+    border: 3px solid #6d6961;
+    background-color: #e6e2ce;
+}
+
+button
+{
+    font-size: 20px;
+    font-weight: bold;
+
+    width: 100%;
+    padding: 10px 20px;
+
+    cursor: pointer;
+
+    color: #eaa961;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background-color: #6d6961;
+}
+
+button:hover
+{
+    background-color: #7f7e7e;
+}
+
+dl
+{
+    font-size: 14px;
+    line-height: 20px;
+}
+
+dt,
+dd
+{
+    float: left;
+
+    margin-left: 5px;
+    padding: 0;
+}
+
+dt
+{
+    line-height: 18px;
+
+    padding: 5px;
+
+    cursor: pointer;
+
+    border: 1px solid #6d6961;
+    border-radius: 3px;
+}
+.is-crt dt
+{
+    background-color: #eaa961;
+}
+
+dd
+{
+    display: block;
+
+    padding: 5px 10px;
+
+    cursor: pointer;
+
+    color: #fff;
+    border-radius: 5px;
+    background-color: #6d6961;
+}
+
+dd:hover
+{
+    background-color: #7f7e7e;
+}
