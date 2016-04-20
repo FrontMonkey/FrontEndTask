@@ -1,7 +1,7 @@
 /*
  * @Author: Mertens
  * @Date:   2016-04-17 13:40:39
- * @Last Modified time: 2016-04-19 15:43:23
+ * @Last Modified time: 2016-04-20 00:26:36
  */
 
 'use strict';
@@ -11,51 +11,64 @@
     var arrElements = [];
     var prevElement = null;
     var $universe = $('.universe');
-    var $controlPanel = $('.control');
+    var $controlPanel = $('.control'); 
 
 
     // 默认参数
     var defaults = {
-        order: 0,
+        order: 1,
         status: 'stop',
-        time: 5000,
-        angularVelocity: 30
+        energy: 100,
+        decrement: 5, // 能源每秒消耗量
+        increment: 2, // 能源每秒增量
+        angularVelocity: 30 // 飞船飞行每秒旋转的角度
     }
 
     /**
      * 根据操作创建飞船、操作飞船
      *
-     * @param {object}  options{
-                            time: 控制飞船飞行的时间
-                            angularVelocity: 飞船飞行每秒旋转的角度
-                        }
+     * @param {object}  
      */
     $.fn.spaceShipRotate = function(options) {
+
         options = $.extend({}, defaults, options || {});
 
-        // 飞船的构造函数
-        var Spaceship = function(order) {
-            this.order = order; // 飞船的序号
-            this.energy = 100; // 飞船的能量
-            this.status = 'stop'; // 飞船的状态
-            this.angle = 0; // 飞船已经飞行的角度
-            this.isFlying = false; // 表示该飞船是否正在飞行
-            this.element = this.createELement(order).get(0); // 飞船代表的元素
+        /**
+         * 飞船的构造函数
+         */
+        var Spaceship = function(options) {
+            // 飞船的序号
+            this.order = options.order;
+            // 飞船的能量
+            this.energy = options.energy;
+            // 飞船的状态 
+            this.status = options.status;
+            // 能源每秒消耗量
+            this.decrement = options.decrement;
+            // 能源每秒增量
+            this.increment = options.increment;
+            // 飞船飞行每秒旋转的角度
+            this.angularVelocity = options.angularVelocity;
+            // 飞船已经飞行的角度
+            this.angle = 0;
+            // 表示该飞船是否正在飞行
+            this.isFlying = false;
+            // 飞船代表的元素
+            this.element = this.createELement().get(0);
             this.element.originNode = this;
-            this.control = this.createControl(order).get(0); // 飞船的控制条
+            // 飞船的控制条
+            this.control = this.createControl().get(0);
             this.control.originNode = this;
         };
 
         /**
          * 创建一个飞船
-         *
-         * @param {number} order 飞船的序号
          */
-        Spaceship.prototype.createELement = function(order) {
+        Spaceship.prototype.createELement = function() {
             var tempHTML = '';
-            tempHTML += '<div class="spaceship num' + order + '">';
+            tempHTML += '<div class="spaceship num' + this.order + '">';
             tempHTML += '<span class="energy" style="width: ' + this.energy + '%"></span>';
-            tempHTML += '<span class="number">' + order + '号-' + this.energy + '%</span>';
+            tempHTML += '<span class="number">' + this.order + '号-' + this.energy + '%</span>';
             tempHTML += '</div>';
             var $temp = $(tempHTML);
             return $temp;
@@ -66,16 +79,15 @@
          *
          * @param {number} order 飞船的序号
          */
-        Spaceship.prototype.createControl = function(order) {
+        Spaceship.prototype.createControl = function() {
             var tempHTML = '';
             tempHTML += '<dl class="clearfix">';
-            tempHTML += '<dt>对' + order + '号飞船下达指令</dt>';
+            tempHTML += '<dt>对' + this.order + '号飞船下达指令</dt>';
             tempHTML += '<dd id="start">开始飞行</dd>';
             tempHTML += '<dd id="stop">停止飞行</dd>';
             tempHTML += '<dd id="destory">销毁</dd>';
             tempHTML += '</dl>';
             var $temp = $(tempHTML);
-            $temp.id = 'ship' + order;
             return $temp;
         };
 
@@ -94,17 +106,17 @@
          */
         function launchShip() {
             // 找出要发射飞船的序号
-            var order = queryOrder(arrElements);
-            if (order > 4) {
+            options.order = queryOrder(arrElements);
+            if (options.order > 4) {
                 alert('最多只能发射 4 艘飞船！');
                 return;
             }
             // 创建新的飞船
-            var data = new Spaceship(order);
+            var tempShip = new Spaceship(options);
             // 将飞船的数据存入到数组中储存
-            arrElements[order - 1] = data;
+            arrElements[options.order - 1] = tempShip;
             // 将飞船和控制条加入到文档（发射）
-            data.addToDoc();
+            arrElements[options.order - 1].addToDoc();
 
             /**
              * 查询要发射飞船的序号，遍历数组中的每一项
@@ -128,86 +140,48 @@
          *
          * @param {object} options 操控当前选中飞船的参数
          *  options {
-         *      order: 当前选中飞船的序号,
-         *      status: 对当前飞船的操作动作,
-         *      time: 控制飞船飞行的时间,
-         *      angularVelocity: 飞船飞行每秒旋转的角度
+         *      order: {number},
+         *      status: {string},
+         *      decrement: {number},
+         *      increment: {number},
+         *      angularVelocity: {number}
          *  }
          */
         function handler(options) {
+
             // 储存当前选中飞船的节点
             var node = arrElements[options.order - 1];
-            // 当前选中的飞船
-            var element = node.element;
-            // 选中飞船的控制条
-            var control = node.control;
-            // 刷新一帧的时间间隔
-            var RATE = 16;
-            // 刷新一次减少的能量
-            var decrement = 100 / (options.time / RATE);
-            // 刷新一次旋转的角度
-            var angularVelocity = options.angularVelocity / (1000 / RATE);
+
+            // 更改飞船的状态
+            node.status = options.status;
+
+
 
             // 对飞船的操作
             var handlers = (function() {
+
                 function start() {
+
                     if (!node.isFlying) {
                         // 每一次开始分型都从上一次结束的终点开始
-                        $(element).css({
+                        $(node.element).css({
                             transform: 'rotate(' + node.angle + 'deg)'
                         });
-                        animate();
-                        node.isFlying = true;
+                        node.status = 'start';
+                        animate(node);
                     }
 
-                    /*
-                     * 运动函数
-                     * 
-                     * 飞船飞行
-                     * 能源变化
-                     * 能源百分数变化
-                     */
-                    function animate() {
-                        var step = function() {
-                            node.angle += angularVelocity;
-                            // 有能量才飞行
-                            if (node.energy > 0) {
-                                node.energy -= decrement;
-                                $(element).css({
-                                    transform: 'rotate(' + node.angle + 'deg)'
-                                });
-                                $(element).children('.energy').css({
-                                    width: node.energy + '%'
-                                });
-                                $(element).children('.number').text(node.order + '号 - ' + Math.floor(node.energy) + ' %');
-                            }
-                            // 能量耗尽，停止飞行动画 
-                            else {
-                                $(element).css({
-                                    transform: 'rotate(' + node.angle + 'deg)'
-                                });
-                                $(element).children('.energy').css({
-                                    width: '0%'
-                                });
-                                $(element).children('.number').text(node.order + '号 - 0 %');
-                                clearInterval(node.intervalID);
-                                node.isFlying = false;
-                                node.energy = 100;
-                            }
-                        };
-                        node.intervalID = setInterval(step, RATE);
-                    };
                 };
 
                 function stop() {
-                    clearInterval(node.intervalID);
                     node.isFlying = false;
+                    node.status = 'stop';
                 };
 
                 function destory() {
                     arrElements[options.order - 1] = null;
-                    $(control).remove();
-                    $(element).remove();
+                    $(node.control).remove();
+                    $(node.element).remove();
                 };
                 return {
                     start: start,
@@ -220,7 +194,57 @@
             handlers[options.status]();
         }
 
+        /*
+         * 运动函数
+         * 
+         * 飞船飞行
+         * 能源变化
+         * 能源百分数变化
+         */
+        function animate(node) {
 
+            // 刷新一帧的时间间隔
+            var RATE = 16;
+
+            // 刷新一次减少的能量
+            var decrement = (node.decrement / (1000 / RATE));
+
+            // 刷新一次补充的能量
+            var increment = (node.increment / (1000 / RATE));
+
+            // 刷新一次旋转的角度
+            var angularVelocity = node.angularVelocity / (1000 / RATE);
+
+            var step = function() {
+
+                // 不在飞行状态，当前状态为飞行，有能量才飞行
+                if (node.status === 'start' && node.energy > 0) {
+                    node.isFlying = true;
+                    node.energy -= decrement;
+                    node.angle += angularVelocity;
+                }
+                // 能量耗尽，将状态设置为停止 
+                else if (node.energy < 0) {
+                    node.energy = 0;
+                    node.isFlying = false;
+                    node.status = 'stop';
+                }
+                // 不在飞行状态，且当前状态为停止
+                else if (!node.isFlying && node.status === 'stop' && node.energy > 100) {
+                    node.energy = 100;
+                    clearInterval(node.intervalID);
+                }
+                node.energy += increment;
+                $(node.element).css({
+                    transform: 'rotate(' + node.angle + 'deg)'
+                });
+                $(node.element).children('.energy').css({
+                    width: node.energy + '%'
+                });
+                $(node.element).children('.number').text(node.order + '号 - ' + Math.floor(node.energy) + ' %');
+            };
+            node.intervalID = setInterval(step, RATE);
+        };
 
         function clickHandler(event) {
             var target = event.target;
@@ -252,7 +276,4 @@
     };
 })(jQuery);
 
-$('.control').spaceShipRotate({
-    time: 20000,
-    angularVelocity: 30
-});
+$('.control').spaceShipRotate();
