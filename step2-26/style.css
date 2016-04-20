@@ -1,7 +1,7 @@
 /*
 * @Author: Mertens
 * @Date:   2016-04-17 10:50:45
-* @Last Modified time: 2016-04-20 00:27:05
+* @Last Modified time: 2016-04-20 19:06:48
 */
 html {
     min-width: 900px;
@@ -75,32 +75,8 @@ button
     color: #6d6961;
     border-radius: 10px;
     background-color: #e6e2ce;
-}
-.num1
-{
-    -webkit-transform-origin: 40px 80px;
-            transform-origin: 40px 80px;
-}
-.num2
-{
-    top: 90px;
-
-    -webkit-transform-origin: 40px 110px;
-            transform-origin: 40px 110px;
-}
-.num3
-{
-    top: 60px;
-
-    -webkit-transform-origin: 40px 140px;
-            transform-origin: 40px 140px;
-}
-.num4
-{
-    top: 30px;
-
-    -webkit-transform-origin: 40px 170px;
-            transform-origin: 40px 170px;
+    top: 80px;
+    transform-origin: 40px 120px;
 }
 
 .spaceship .energy

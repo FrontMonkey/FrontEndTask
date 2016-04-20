@@ -1,7 +1,7 @@
 /*
  * @Author: Mertens
  * @Date:   2016-04-17 13:40:39
- * @Last Modified time: 2016-04-20 11:04:15
+ * @Last Modified time: 2016-04-20 18:11:02
  */
 
 'use strict';
@@ -168,6 +168,7 @@
                             transform: 'rotate(' + node.angle + 'deg)'
                         });
                         node.status = 'start';
+                        
                         clearInterval(node.intervalID);
                         animate(node);
                     }
