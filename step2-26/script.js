@@ -1,7 +1,7 @@
 /*
  * @Author: Mertens
  * @Date:   2016-04-17 13:40:39
- * @Last Modified time: 2016-04-20 00:26:36
+ * @Last Modified time: 2016-04-20 10:41:17
  */
 
 'use strict';
@@ -10,6 +10,7 @@
     // 存放每个飞船的数据
     var arrElements = [];
     var prevElement = null;
+    var crtShipOrder = null;
     var $universe = $('.universe');
     var $controlPanel = $('.control'); 
 
@@ -29,9 +30,9 @@
      *
      * @param {object}  
      */
-    $.fn.spaceShipRotate = function(options) {
+    $.fn.spaceShipRotate = function(opts) {
 
-        options = $.extend({}, defaults, options || {});
+        opts = $.extend({}, defaults, opts || {});
 
         /**
          * 飞船的构造函数
@@ -104,7 +105,7 @@
         /**
          * 发射一艘飞船
          */
-        function launchShip() {
+        function launchShip(options) {
             // 找出要发射飞船的序号
             options.order = queryOrder(arrElements);
             if (options.order > 4) {
@@ -249,14 +250,16 @@
         function clickHandler(event) {
             var target = event.target;
             var parent = target.parentNode;
-            var data = parent.originNode;
+            // 储存飞船信息的节点
+            var node = parent.originNode;
             // 点击发射飞船
             if (target.id === 'new_ship') {
-                launchShip();
+                launchShip(opts);
             }
             // 选中飞船
             else if (target.tagName === 'DT' && parent.tagName === 'DL') {
-                options.order = data.order;
+                crtShipOrder = node.order;
+                opts.order = crtShipOrder;
                 if (prevElement !== null) {
                     $(prevElement).removeClass('is-crt');
                 }
@@ -265,9 +268,9 @@
             }
             // 选择飞船的状态
             else if (target.tagName === 'DD' && parent.tagName === 'DL') {
-                if (options.order === data.order) {
-                    options.status = target.id;
-                    handler(options);
+                if (crtShipOrder === node.order && crtShipOrder === opts.order) {
+                    opts.status = target.id;
+                    handler(opts);
                 }
             }
         }
