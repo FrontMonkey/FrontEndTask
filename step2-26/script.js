@@ -1,7 +1,7 @@
 /*
  * @Author: Mertens
  * @Date:   2016-04-17 13:40:39
- * @Last Modified time: 2016-04-20 10:41:17
+ * @Last Modified time: 2016-04-20 11:04:15
  */
 
 'use strict';
@@ -162,13 +162,13 @@
             var handlers = (function() {
 
                 function start() {
-
                     if (!node.isFlying) {
                         // 每一次开始分型都从上一次结束的终点开始
                         $(node.element).css({
                             transform: 'rotate(' + node.angle + 'deg)'
                         });
                         node.status = 'start';
+                        clearInterval(node.intervalID);
                         animate(node);
                     }
 
