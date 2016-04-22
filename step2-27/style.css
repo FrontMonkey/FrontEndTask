@@ -1,0 +1,185 @@
+/*
+* @Author: Mertens
+* @Date:   2016-04-20 19:45:07
+* @Last Modified time: 2016-04-22 02:40:59
+*/
+.clearfix:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    overflow: hidden;
+    height: 0;
+    content: '.';
+}
+
+/* 布局代码 start */
+    html, body {
+        height: 100%;
+        font-family: 'microsoft yahei';
+        overflow: hidden;
+    }
+    .wrap {
+        height: 100%;
+        padding-left: 300px;
+    }
+    .side {
+        float: left;
+        width: 300px;
+        height: 100%;
+        position: relative;
+        margin-left: -100%;
+        left: -300px;
+        background-color: #6d6961;
+        border: 5px solid #e6e2ce;
+        border-bottom: none;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    .main {
+        float: left;
+        width: 100%;
+        height: 100%;
+        background-color: #6d6961;
+    }
+/* 布局代码 end */
+
+/* 控制台 start */
+    .control-panel {
+        height: 100%;
+        background-color: #e6e2ce;
+        position: relative;
+    }
+    .control-panel h2 {
+        text-align: center;
+        font-size: 20px;
+        background-color: #6d6961;
+        color: #eaa961;
+        padding: 10px 0;
+        border-radius: 5px;
+    }
+
+    form {
+        line-height: 1.5;
+        margin-top: 5px;
+        border: 2px solid #6d6961;
+        padding: 10px;
+    }
+    legend {
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 0 5px;
+        font-family: 'microsoft yahei';
+    }
+    label {
+        font-size: 14px;
+    }
+    button {
+        font-size: 16px;
+        padding: 10px 20px;
+        margin-top: 10px;
+        border-radius: 10px;
+        border: none;
+        background-color: #6d6961;
+        color: #eaa961;
+        font-weight: bold;
+    }
+    button:hover {
+        background-color: #514F4C;
+    }
+    .control {
+        line-height: 2;
+        color: #6d6961;
+        padding: 10px;
+    }
+    .control dl {
+        margin: 10px 0;
+    }
+    .control dt {
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .control dd {
+        display: inline-block;
+        font-size: 14px;
+        background-color: #6d6961;
+        color: #eaa961;
+        padding: 0 10px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .control dd + dd {
+        margin-left: 10px;
+    }
+    .control dd:hover {
+        background-color: #514F4C;
+    }
+/* 控制台 end */
+
+/* 飞行日志 start */
+    .log-wrap {
+        border-top: 5px solid #e6e2ce;
+        padding: 10px;
+    }
+    .log-wrap h2 {
+        line-height: 2;
+        font-size: 18px;
+        color: #eaa961;
+    }
+    #flight_log {
+        line-height: 2;
+        height: 400px;
+        width: 250px;
+        overflow: auto;
+        color: #e6e2ce;
+    }
+/* 飞行日志 end */
+
+/* 太空 start*/
+    .universe {
+        position: relative;
+    }
+
+    .star {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300px;
+        height: 300px;
+        margin: -150px 0 0 -150px;
+        border-radius: 50%;
+        background-color: #eaa961;
+    }
+
+    .spaceship {
+        font-size: 16px;
+        line-height: 40px;
+        position: absolute;
+        color: #6d6961;
+        font-weight: bold;
+        top: 50%;
+        left: 50%;
+        width: 140px;
+        height: 40px;
+        text-align: center;
+        border-radius: 30px;
+        background-color: #e6e2ce;
+        /* display: block; */
+        margin-left: -70px;
+        margin-top: -240px;
+        transform-origin: 70px 240px;
+        /* transform: rotate(45deg); */
+        overflow: hidden;
+    }
+    .spaceship .energy {
+        display: block;
+        height: 100%;
+        background-color: #ED9F7D;
+        width: 100%;
+    }
+    .spaceship .msg {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 0;
+    } 
+/* 太空 end */
