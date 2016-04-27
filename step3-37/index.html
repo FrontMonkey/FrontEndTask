@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <title>一个简易的浮层对话框组件</title>
+        <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+        <link rel="stylesheet" type="text/css" href="stylesheets/modal.css">
+        <script type="text/javascript" data-main="scripts/main.js" src="scripts/require.js"></script>
+    </head> 
+    <body>
+        <div class="modal">
+            <div class="modal-mask"></div>    
+            <div class="modal-dialog">
+                <div class="modal-header">
+                    <h4 class="modal-title">模态对话框</h4>
+                </div>
+                <p class="modal-body">
+                    这是一个模态对话框
+                </p>
+                <div class="modal-footer">
+                    <button type="button" class="btn confirm">确认</button>
+                    <button type="button" class="btn cancel">取消</button>
+                </div>
+            </div>
+            <button type="button" class="modal-btn">点击弹出对话框</button>
+        </div> 
+        <p>
+            这个插件基于 jQuery 开发
+            使用了 RequireJS 工具
+            
+            使用方法：
+            
+            通过 jquery 获取一个元素，调用该 jquery 实例上的 modal() 方法
+            即可初始化该插件，点击该元素即可弹出对话框
+            可以给该方法传入以下参数，自定义配置插件
+            <pre>
+             {
+                // 选择符的参数，用于获取页面上的元素
+                selectors: {
+                    mask: '.modal-mask', // 遮罩层
+                    dialog: '.modal-dialog', // 对话框
+                    confirm: '.confirm', // 确认按钮
+                    cancel: '.cancel' // 取消按钮
+                },
+                callback: null // 点击确认按钮运行的函数
+             };   
+            </pre>
+        </p>
+    </body>
+</html>
