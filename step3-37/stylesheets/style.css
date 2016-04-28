@@ -1,0 +1,27 @@
+/*
+* @Author: Mertens
+* @Date:   2016-04-25 06:47:47
+* @Last Modified by:   Administrator
+* @Last Modified time: 2016-04-26 22:52:33
+*/
+*
+{
+    margin: 0;
+    padding: 0;
+}
+button
+{
+    padding: 0;
+
+    border: none;
+    outline: 0;
+    background-color: #d9d1d1;
+}
+body > p
+{
+    font-family: 'Microsoft Yahei';
+    font-size: 14px;
+    line-height: 2;
+
+    white-space: pre;
+}

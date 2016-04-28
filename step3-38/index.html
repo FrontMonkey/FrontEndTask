@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <title>一个表格组件</title>
+        <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+        <link rel="stylesheet" type="text/css" href="stylesheets/table.css">
+        <script type="text/javascript" data-main="scripts/main.js" src="scripts/require.min.js"></script>
+    </head> 
+    <body>
+    <h2>测试表格1</h2>
+    <div id="demo1"></div>
+    <p>
+            这个插件基于 jQuery 开发
+            使用了 RequireJS 工具
+            
+            使用方法：
+            
+            1. 用 jquery 获取一个元素，调用该 jquery 实例上的 table() 方法，即可生成表格，并将表格插入到该元素之下，即可初始化该插件
+            2. 可以给该方法传入以下参数，自定义配置插件
+            <pre>
+            {
+                // 表格的数据
+                data: {
+                    // 表头的数据
+                    head: ['姓名', '语文', '数学', '英语', '总分'],
+                    // 表格内容的数据
+                    body: [
+                        ['小明', '80', '90', '70', '240'],
+                        ['小红', '90', '60', '90', '240'],
+                        ['小亮', '60', '100', '70', '230']
+                    ]
+                },
+                tableClass: 'sort-table', // 给表格添加的类名
+                sortClass: 'sort' // 给具有点击排序功能的表头单元格添加的类名
+            }
+            </pre>
+    </p>
+    <h2>测试表格2</h2>
+    <div id="demo2"></div>
+    <h2>OK!没问题！~~~~</h2>
+    </body>
+</html>

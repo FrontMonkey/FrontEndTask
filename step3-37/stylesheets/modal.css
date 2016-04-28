@@ -1,0 +1,94 @@
+/*
+* @Author: Mertens
+* @Date:   2016-04-25 06:48:24
+* @Last Modified time: 2016-04-26 22:33:58
+*/
+
+.modal-mask,
+.modal-dialog
+{
+    display: none;
+}
+
+.modal-mask.show
+{
+    font-family: 'microsoft yahei';
+
+    position: fixed;
+    z-index: 9;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: block;
+
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.modal-dialog.show
+{
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: block;
+
+    width: 400px;
+    height: 300px;
+    margin: auto;
+
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    background-color: #f3f5f6;
+}
+.modal-header
+{
+    border-bottom: 1px solid #e5e5e5;
+}
+.modal-body
+{
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    height: 100%;
+    padding: 15px 15px 60px;
+}
+.modal-title
+{
+    font-size: 20px;
+
+    margin: 0;
+    padding: 15px;
+
+    color: #77a4c7;
+}
+.modal-footer
+{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.modal-footer .btn + .btn
+{
+    margin-left: 0;
+}
+.modal-btn,
+.modal-footer .btn
+{
+    font-size: 16px;
+    line-height: 30px;
+
+    padding: 0 20px;
+    margin: 15px;
+
+    cursor: pointer;
+
+    color: #fff;
+    border-radius: 5px;
+    background-color: #77a4c7;
+}

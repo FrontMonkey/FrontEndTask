@@ -1,0 +1,40 @@
+/*
+* @Author: Mertens
+* @Date:   2016-04-25 06:48:24
+* @Last Modified time: 2016-04-28 09:51:41
+*/
+.sort-table
+{
+    background-color: #f4f9f4;
+}
+.sort-table td
+{
+    font-family: 'microsoft yahei';
+    font-size: 16px;
+
+    padding: 5px 15px;
+
+    text-align: center;
+
+    background-color: #c8f4ba;
+}
+.sort-table tbody td:first-child,
+.sort-table thead td
+{
+    color: #e7f6e2;
+    background-color: #87c770;
+    font-weight: bold;
+}
+
+.sort-table .sort
+{
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+.sort-table .sort:hover
+{
+    background-color: #67A774;
+}

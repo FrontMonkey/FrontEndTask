@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <title>行星与飞船</title>
+        <link rel="stylesheet" type="text/css" href="reset.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="jquery-2.2.3.min.js"></script>
+    </head>
+    <body class="clearfix">
+        <div class="wrap">
+            <div class="main universe">
+                <!-- 飞行日志 start -->
+                <div class="log-wrap">
+                   <h2>飞行日志</h2>
+                   <p id="flight_log"></p>
+                </div>
+                <!-- 飞行日志 end -->
+                <!-- 行星 start -->
+                <div class="star"></div>
+                <!-- 行星 end -->
+            </div>
+            <div class="side">
+                <div class="control-panel" id="controlPanel">
+                    <h2>控制台</h2>
+                    <form name="controlForm">
+                        <fieldset>
+                            <legend>动力系统选择</legend>
+                            <p>
+                                <input type="radio" name="dynamicSystem" value="slow" checked>
+                                <label>前进号(速率30px/s，能耗5%/s)</label>
+                            </p>
+                            <p>
+                                <input type="radio" name="dynamicSystem" value="medium">
+                                <label>奔腾号(速率50px/s，能耗7%/s)</label>
+                            </p>
+                            <p>
+                                <input type="radio" name="dynamicSystem" value="fast">
+                                <label>超越号(速率70px/s，能耗9%/s)</label>
+                            </p>
+                        </fieldset>
+                        <fieldset>
+                            <legend>能源系统选择</legend>
+                            <p>
+                                <input type="radio" name="energySystem" value="slow" checked>
+                                <label>劲量型(补充能源速度2%/s)</label>
+                            </p>
+                            <p>
+                                <input type="radio" name="energySystem" value="medium">
+                                <label>光能型(补充能源速度3%/s)</label>
+                            </p>
+                            <p>
+                                <input type="radio" name="energySystem" value="fast">
+                                <label>永久型(补充能源速度4%/s)</label>
+                            </p>
+                        </fieldset>
+                    </form>
+                    <button id="launch">创建新飞船</button>
+                    <div class="control"></div>
+                </div>
+            </div>
+        </div>
+    <script src="script.js"></script>
+    </body>
+</html>
