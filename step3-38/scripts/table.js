@@ -71,7 +71,7 @@ define(['jquery'], function() {
                 /**
                  * 根据传入的数据生成行的 html 字符串(generate <tr>)
                  * 
-                 * @param {HTMLElement} ele 选中的元素
+                 * @param {array} arrData 表格的数据
                  */
                 function _gTr(arrData) {
                     var arrStr = '<tr>'; // 存放处理一维数组生成的字符串
