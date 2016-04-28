@@ -1,7 +1,7 @@
 /*
  * @Author: Mertens
  * @Date:   2016-04-27 11:34:14
- * @Last Modified time: 2016-04-27 23:04:42
+ * @Last Modified time: 2016-04-28 09:49:09
  */
 
 'use strict';
@@ -15,7 +15,7 @@ define(['jquery'], function() {
         */
         function Table($ele, opts) {
             // 合并参数
-            this.settings = $.extend(true, $.fn.table.defaults, opts || {});
+            this.settings = $.extend(false, $.fn.table.defaults, opts || {});
             this.$element = $ele; // 存放 table 的根节点
             this.init();
         };
@@ -23,7 +23,7 @@ define(['jquery'], function() {
             /**
              * 初始化插件
              */
-            init: function() {
+            init: function() { 
                 this.render();
                 this.initEvent();
             },
