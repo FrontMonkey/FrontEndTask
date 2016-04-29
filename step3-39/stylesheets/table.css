@@ -1,0 +1,56 @@
+/*
+* @Author: Mertens
+* @Date:   2016-04-28 15:46:10
+* @Last Modified time: 2016-04-29 11:27:40
+*/
+
+.custom-table
+{
+    background-color: #f4f9f4;
+    border-spacing: 0;
+    border-collapse: collapse;
+    box-sizing: border-box;
+}
+.custom-table td,
+.custom-table th
+{
+    font-family: 'microsoft yahei';
+    font-size: 16px;
+
+    padding: 5px 15px;
+
+    text-align: center;
+
+    background-color: #c8f4ba;
+    border: 1px solid #435D21;
+}
+.custom-table tbody td:first-child,
+.custom-table thead th
+{
+    color: #e7f6e2;
+    background-color: #87c770;
+    font-weight: bold;
+}
+
+/* 具有点击排序功能的表头 start*/
+    .custom-table .sort
+    {
+        cursor: pointer;
+        -webkit-user-select: none;
+           -moz-user-select: none;
+            -ms-user-select: none;
+                user-select: none;
+    }
+    .custom-table .sort:hover
+    {
+        background-color: #67A774;
+    }
+/* 具有点击排序功能的表头 end*/
+
+.custom-table thead.fixed tr:first-child {
+    position: fixed;
+    top: 0;
+}
+.custom-table thead.fixed th {
+    border-bottom: none;
+}
