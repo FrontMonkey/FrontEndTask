@@ -1,14 +1,12 @@
 /*
 * @Author: Mertens
 * @Date:   2016-04-29 15:27:02
-* @Last Modified time: 2016-05-02 23:19:37
+* @Last Modified time: 2016-05-03 13:58:30
 */
 .calendar
 {
     position: relative;
     z-index: 1;
-    top: 20px;
-    left: 25px;
 
     display: inline-block;
 

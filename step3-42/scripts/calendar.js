@@ -1,7 +1,7 @@
 /*
  * @Author: Mertens
  * @Date:   2016-04-29 15:27:42
- * @Last Modified time: 2016-05-03 11:23:58
+ * @Last Modified time: 2016-05-03 14:12:09
  */
 
 'use strict';
@@ -23,9 +23,7 @@ define(['jquery'], function() {
             min: 2, // 选择的最小时间间隔
             max: 7, // 选择的最大时间间隔
             // 处理一个日期对象或者多个日期对象的函数
-            callback: function(arr){
-                console.dir(arr);
-            }
+            callback: function(arr){}
         }
         return settings;
     })();
@@ -33,7 +31,7 @@ define(['jquery'], function() {
     // 自定义属性的命名空间
     var NAMESPACE = 'data-calendar-';
 
-    // 日期选择框的 html
+    // 日期选择框的 html iput_box_html
     var INPUT_BOX_HTML =
         '<p>' +
             '<label for="selectDate">' + defaults.legend +
@@ -41,7 +39,7 @@ define(['jquery'], function() {
             '</label>' +
         '</p>';
 
-    // 生成日历模态框头部的 html
+    // 生成日历模态框头部的 html modal_hd_html
     var MODAL_HD_HTML = 
         '<div class="calendar-hd">' +
             /*选择年份、月份 start*/
@@ -68,7 +66,7 @@ define(['jquery'], function() {
             '<div class="next btn" ' + NAMESPACE + 'nextMon' + '></div>' +
         '</div>'; // calendar-hd
 
-    // 日期表格的 html
+    // 日期表格的 html date_item_html
     var DATE_ITEM_HTML = (function() {
         var tempHtml = '<li>';
         tempHtml += '<ol class="days">';
@@ -80,10 +78,10 @@ define(['jquery'], function() {
         return tempHtml;
     })();
 
-    // 星期显示文字
+    // 星期显示文字 week
     var WEEK = ['日', '一', '二', '三', '四', '五', '六'];
 
-    // 一天的毫秒数
+    // 一天的毫秒数 ms_per_day
     var MS_PER_DAY = 1000 * 60 * 60 * 24;
 
     var Calendar = function(options){
@@ -99,11 +97,16 @@ define(['jquery'], function() {
         this.$dateItems = null;
 
         /*点击选择日期的时候用到的对象*/
+
         this.$prevSelectedDate = null; // (选择一天)上一个选中的日期对象
+
+        this.$firstChoice = null;
+        this.$secondChoice = null;
 
         this.$startDateItem = null; // (选择时间段)第一个选中日期的 jq 对象
         this.$endDateItem = null; // (选择时间段)第二个选中日期的 jq 对象
         this.dateItemsArr = []; // (选择时间段)选中所有日期的 jq 对象(jQElement)
+
         this.startTime; // (选择时间段)开始时间
         this.endTime; // (选择时间段)结束时间
 
@@ -217,13 +220,13 @@ define(['jquery'], function() {
         * 2. 再根据默认的参数和以后的操作，填充日期列表的数据
         */
         render: function () {
-            var $dateItems;
+            var _this.$dateItems;
             this.drawCalendar();
             // 取得日历的表格，之后就填充
-            $dateItems = this.$calendarElement.find('.days');
-            this.fillDate($dateItems.eq(0), this.year, this.month - 1);
-            this.fillDate($dateItems.eq(1), this.year, this.month);
-            this.fillDate($dateItems.eq(2), this.year, this.month + 1);
+            _this.$dateItems = this.$calendarElement.find('.days');
+            this.fillDate(_this.$dateItems.eq(0), this.year, this.month - 1);
+            this.fillDate(_this.$dateItems.eq(1), this.year, this.month);
+            this.fillDate(_this.$dateItems.eq(2), this.year, this.month + 1);
         },
         /*
         * 初始化事件
@@ -242,7 +245,7 @@ define(['jquery'], function() {
             */
             this.$calendarElement.on('click', '[data-calendar-prevmon]', function() {
                 // 切换日期表格，实现滑动动画
-                $dateItems.addClass('slide').css('margin-left', 0);
+                _this.$dateItems.addClass('slide').css('margin-left', 0);
                 month--;
                 if (month === -1) {
                     month = 11;
@@ -255,7 +258,7 @@ define(['jquery'], function() {
             */
             this.$calendarElement.on('click', '[data-calendar-nextmon]', function() {
                 // 切换日期表格，实现滑动动画
-                $dateItems.addClass('slide').css('margin-left', '-200%');
+                _this.$dateItems.addClass('slide').css('margin-left', '-200%');
                 month++;
                 if (month === 12) {
                     month = 0;
@@ -305,14 +308,14 @@ define(['jquery'], function() {
                     var $dateItem = $(DATE_ITEM_HTML);
                     if (prev) {
                         this.fillDate($dateItem, year, month - 1);
-                        $dateItems.children('li:last').remove();
-                        $dateItems.prepend($dateItem);
+                        _this.$dateItems.children('li:last').remove();
+                        _this.$dateItems.prepend($dateItem);
                     } else {
                         this.fillDate($dateItem, year, month + 1);
-                        $dateItems.children('li:first').remove();
-                        $dateItems.append($dateItem);
+                        _this.$dateItems.children('li:first').remove();
+                        _this.$dateItems.append($dateItem);
                     }
-                    $dateItems.removeClass('slide').css('margin-left', '-100%');
+                    _this.$dateItems.removeClass('slide').css('margin-left', '-100%');
                 }, 300);
             }
 
@@ -340,22 +343,22 @@ define(['jquery'], function() {
                 $nextDateItem = $(DATE_ITEM_HTML);
                 this.fillDate($nextDateItem, year, month + 1);
                 if (prev) {
-                    $dateItems.children('li:first').remove();
-                    $dateItems.prepend($dateItem);
-                    $dateItems.addClass('slide').css('margin-left', '0');
-                    $dateItems.children('li:last').remove();
-                    $dateItems.children('li:last').remove();
+                    _this.$dateItems.children('li:first').remove();
+                    _this.$dateItems.prepend($dateItem);
+                    _this.$dateItems.addClass('slide').css('margin-left', '0');
+                    _this.$dateItems.children('li:last').remove();
+                    _this.$dateItems.children('li:last').remove();
                 } else {
-                    $dateItems.children('li:last').remove();
-                    $dateItems.append($dateItem);
-                    $dateItems.addClass('slide').css('margin-left', '-200%');
-                    $dateItems.children('li:first').remove();
-                    $dateItems.children('li:first').remove();
+                    _this.$dateItems.children('li:last').remove();
+                    _this.$dateItems.append($dateItem);
+                    _this.$dateItems.addClass('slide').css('margin-left', '-200%');
+                    _this.$dateItems.children('li:first').remove();
+                    _this.$dateItems.children('li:first').remove();
                 }
-                $dateItems.prepend($prevDateItem);
-                $dateItems.append($nextDateItem);
+                _this.$dateItems.prepend($prevDateItem);
+                _this.$dateItems.append($nextDateItem);
                 setTimeout(function() {
-                    $dateItems.removeClass('slide').css('margin-left', '-100%');
+                    _this.$dateItems.removeClass('slide').css('margin-left', '-100%');
                 }, 300);
             }
 
@@ -383,6 +386,7 @@ define(['jquery'], function() {
             function clickDurationHandler($crtElement) {
                 var dateNum = parseInt($crtElement.html());
                 var callback = _this.settings.callback;
+                var temp;
                 var days;
                 /*
                 * 点击一个日期，会给当前的 jq 元素设置以下数据
@@ -402,40 +406,47 @@ define(['jquery'], function() {
                                 year: _this.year,
                                 date: dateNum
                             });
-                // 如果没有选择开始日期
-                if (!_this.$startDateItem) {
-                    _this.$startDateItem = $crtElement;
-                    _this.$startDateItem.data({
-                            status:'selected',
-                            flag: 'start'
+                // 选择第一个日期
+                if (!_this.$firstChoice) {
+                    _this.$firstChoice = $crtElement;
+                    _this.$firstChoice.data({
+                            status:'selected'
                         })
                         .addClass('selected');
-                    _this.startTime = _this.$startDateItem.data('dateObj').getTime();
+                    // 
                 } 
-                // 如果已经选择了开始日期
-                else if (!_this.$endDateItem) {
-                    // 如果点击开始日期，则取消之前的点击操作
+                // 选择第二个日期
+                else if (!_this.$secondChoice) {
+                    // 两次点击日期相同，则取消之前的点击操作
                     if($crtElement.data('status') === 'selected'){
                         $crtElement.data({
-                                        flag: '',
                                         status: ''
                                     })
                                    .removeClass('selected');
-                        _this.$startDateItem = null;
-                    } else {
-                        _this.endTime = $crtElement.data('dateObj').getTime();
+                        _this.$firstChoice = null;
+                    }
+                    // 如果两次点击的日期不同 
+                    else {
+
+                        _this.$secondChoice = $crtElement.data({
+                                                                status:'selected'
+                                                            })
+                                                            .addClass('selected');
+                        temp = judgeDate(_this.$firstChoice, _this.$secondChoice);
+                        _this.$startDateItem = temp.$start;
+                        _this.$endDateItem = temp.$end;
+                        _this.$startDateItem.data('flag', 'start');
+                        _this.$endDateItem.data('flag', 'end');
+
+                        // 获取开始和结束时间
+                        _this.startTime = _this.$startDateItem.data('dateObj');
+                        _this.endTime = _this.$endDateItem.data('dateObj');
+
                         // 计算日期跨度
                         days = Math.abs((_this.endTime - _this.startTime) / MS_PER_DAY) + 1;
 
                         // 如果满足日期跨度限制，则运行回调函数
                         if (days <= _this.settings.max && days >= _this.settings.min) {
-                            _this.$endDateItem = $crtElement;
-                            _this.$startDateItem.data('flag', 'start');
-                            _this.$endDateItem.data({
-                                            status:'selected',
-                                            flag: 'end'
-                                        })
-                                        .addClass('selected');
                             selectDuration(days);
                         } else if (days < _this.settings.min) {
                             alert('最少要选择 ' + _this.settings.min + ' 天！');
@@ -454,14 +465,10 @@ define(['jquery'], function() {
                             _this.dateItemsArr[i].removeClass('selected duration');
                         }
                         _this.dateItemsArr = [];
-
-                        _this.$startDateItem.data('status', '');
-                        _this.$endDateItem.data('status', '');
-                        _this.$startDateItem = $crtElement;
-                        _this.$startDateItem.data('status', 'selected')
-                                      .addClass('selected');
-                        _this.startTime = _this.$startDateItem.data('dateObj').getTime();
-                        _this.$endDateItem = null;
+                        resetStatus();
+                        // 重新设置选中代表日期的 jq 对象
+                        _this.$firstChoice = $crtElement.data('status', 'selected')
+                                                        .addClass('selected');
                     }
                     // 如果点击的是之前选中的开始和结束日期
                     // 1. 如果是点击开始日期，则将结束日期作为开始日期
@@ -475,26 +482,94 @@ define(['jquery'], function() {
                                     _this.dateItemsArr[i].removeClass('selected duration');
                                 }
                             }
-                            _this.$startDateItem = _this.$endDateItem;
-                            _this.$startDateItem.data('flag', 'start');
-                            _this.$endDateItem = null;
-                        } else {
-                            // 移除给选中日期设定的特殊样式
-                            for (var i = 0; i < _this.dateItemsArr.length; i++) {
-                                if(_this.dateItemsArr[i].data('flag') !== 'start') {
-                                    _this.dateItemsArr[i].removeClass('selected duration');
-                                }
-                            }
+                            _this.$startDateItem.data({
+                                status: '',
+                                flag: ''
+                            });
                             _this.$endDateItem.data({
                                 status: '',
                                 flag: ''
                             });
-                            _this.$endDateItem = null;
+                            _this.$startDateItem = null;
+                            _this.$secondChoice = null;
+                            _this.$firstChoice = _this.$endDateItem.data('status', 'selected');
                         }
-                        $crtElement.data('status', '');
+                        // 点击的是结束的日期 
+                        else if ($crtElement.data('flag') === 'end') {
+                            // 移除给选中日期设定的特殊样式
+                            for (var i = 0; i < _this.dateItemsArr.length; i++) {
+                                if (_this.dateItemsArr[i].data('flag') !== 'start') {
+                                    _this.dateItemsArr[i].removeClass('selected duration');
+                                }
+                            }
+                            _this.$startDateItem.data({
+                                status: '',
+                                flag: ''
+                            });
+                            _this.$endDateItem.data({
+                                status: '',
+                                flag: ''
+                            });
+                            _this.$secondChoice = null;
+                            _this.$startDateItem = null;
+                            _this.$endDateItem = null;
+                            _this.$firstChoice.data('status', 'selected');
+                        }
                         _this.dateItemsArr = [];
                     }
-                } 
+                }
+
+                function resetStatus(){
+                    // 移除设定的信息
+                    _this.$startDateItem.data({
+                        status: '',
+                        flag: ''
+                    });
+                    _this.$endDateItem.data({
+                        status: '',
+                        flag: ''
+                    });
+
+                    _this.$firstChoice = null;
+                    _this.$secondChoice = null;
+                    _this.$startDateItem = null;
+                    _this.$endDateItem = null;
+                    _this.startTime = 0;
+                    _this.endTime = 0;
+                }
+
+                /*
+                * 判断元素代表的日期的大小
+                *
+                * param {jqElement} $date1, $date2 代表日期的jq对象
+                * return {object} 返回一个对象
+                */
+                function judgeDate($date1, $date2) {
+                    var result = {};
+                    // $date1 是不是小的日期
+                    var flag;
+                    if($date1.data('year') < $date2.data('year')){
+                        flag = true;
+                    } else if ($date1.data('year') > $date2.data('year')) {
+                        flag = false;
+                    } else if ($date1.data('month') < $date2.data('month')) {
+                        flag = true;
+                    } else if ($date1.data('month') > $date2.data('month')) {
+                        flag = false;
+                    } else if ($date1.data('date') < $date2.data('date')) {
+                        flag = true;
+                    } else if ($date1.data('date') > $date2.data('date')) {
+                        flag = false;
+                    }
+                    if (flag) {
+                        result.$start = $date1;
+                        result.$end = $date2;
+                    } else {
+                        result.$start = $date2;
+                        result.$end = $date1;
+                    }
+                    return result;
+                };
 
                 /*
                 * 选择一个时间段
