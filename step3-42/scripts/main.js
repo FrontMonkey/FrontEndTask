@@ -1,7 +1,7 @@
 /*
 * @Author: Mertens
 * @Date:   2016-04-29 15:27:42
-* @Last Modified time: 2016-05-01 00:03:18
+* @Last Modified time: 2016-05-03 10:52:53
 */
 
 'use strict';
@@ -11,6 +11,7 @@ require.config({
         'jquery': ['jquery-2.2.3.min']
     }
 });
-require(['jquery', 'calendar'], function($){
-    $('#_calendar').calendar();
+require(['jquery', 'calendar'], function($, Calendar){
+    var calendar1 = new Calendar();
 });
+
